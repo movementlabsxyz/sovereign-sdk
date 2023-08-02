@@ -42,7 +42,7 @@ ethers = { workspace = true }
 
 [dev-dependencies]
 anvil  = { workspace = true }
-primitive-types = "0.12.1"
+primitive-types = "0.10.1"
 tokio = { workspace = true }
 tempfile = { workspace = true }
 bytes = { workspace = true }
