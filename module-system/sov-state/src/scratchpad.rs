@@ -190,7 +190,7 @@ impl<S: Storage> RevertableDelta<S> {
 
     fn set(&mut self, key: StorageKey, value: StorageValue) {
         self.writes
-            .insert(key.as_cache_key(), Some(value.as_cache_value()));
+            .insert(key.clone().as_cache_key(), Some(value.as_cache_value()));
     }
 
     fn delete(&mut self, key: StorageKey) {
@@ -201,9 +201,10 @@ impl<S: Storage> RevertableDelta<S> {
 impl<S: Storage> RevertableDelta<S> {
     fn commit(self) -> Delta<S> {
         let mut inner = self.inner;
-
+        println!("Committing deltas!");
         for (k, v) in self.writes.into_iter() {
             if let Some(v) = v {
+                println!("Committing delta: {:?} -> {:?}", k, v);
                 inner.set(k.into(), StorageValue::new_from_cache_value(v));
             } else {
                 inner.delete(k.into());
